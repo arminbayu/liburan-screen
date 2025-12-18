@@ -57,6 +57,7 @@
             pointer-events: none;
             opacity: .95;
             filter: saturate(1.05);
+            z-index: 0;
         }
 
         .flower {
@@ -80,7 +81,6 @@
             }
         }
 
-        /* simple SVG petals look via CSS */
         .flower::before {
             content: "";
             position: absolute;
@@ -105,6 +105,169 @@
             height: 100%;
             pointer-events: none;
             opacity: .75;
+            z-index: 3;
+        }
+
+        /* ===== Falling flowers layer ===== */
+        .fall-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+            /* di atas wall, di bawah card */
+            opacity: .92;
+        }
+
+        .fall-flower {
+            position: absolute;
+            top: -12vh;
+            left: var(--x);
+            width: var(--s);
+            height: var(--s);
+            opacity: var(--o);
+            transform: translate(-50%, -50%) rotate(var(--r));
+            animation:
+                fallDown var(--dur) linear infinite,
+                swayX calc(var(--dur) * .35) ease-in-out infinite alternate,
+                spin calc(var(--dur) * .55) linear infinite;
+            filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .06));
+        }
+
+        @keyframes fallDown {
+            from {
+                transform: translate(-50%, -20vh) rotate(var(--r));
+            }
+
+            to {
+                transform: translate(-50%, 120vh) rotate(calc(var(--r) + 120deg));
+            }
+        }
+
+        @keyframes swayX {
+            from {
+                margin-left: -22px;
+            }
+
+            to {
+                margin-left: 22px;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                rotate: 0deg;
+            }
+
+            to {
+                rotate: 360deg;
+            }
+        }
+
+        .fall-flower::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .95) 0 18%, rgba(255, 255, 255, 0) 19%),
+                radial-gradient(circle at 50% 15%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 85% 50%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 50% 85%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 15% 50%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 78% 22%, rgba(255, 255, 255, .55) 0 18%, rgba(0, 0, 0, 0) 19%),
+                radial-gradient(circle at 22% 78%, rgba(255, 255, 255, .35) 0 16%, rgba(0, 0, 0, 0) 17%);
+            border-radius: 50%;
+        }
+
+        /* ===== Balloons layer ===== */
+        .balloon-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 2;
+            /* di atas bunga jatuh, di bawah bubble canvas */
+            opacity: .88;
+        }
+
+        .balloon {
+            position: absolute;
+            left: -20vw;
+            top: var(--y);
+            width: var(--w);
+            height: calc(var(--w) * 1.25);
+            opacity: var(--o);
+            animation:
+                flyAcross var(--dur) linear infinite,
+                bobY calc(var(--dur) * .18) ease-in-out infinite alternate;
+            filter: drop-shadow(0 16px 26px rgba(0, 0, 0, .10));
+        }
+
+        @keyframes flyAcross {
+            from {
+                transform: translateX(-25vw);
+            }
+
+            to {
+                transform: translateX(140vw);
+            }
+        }
+
+        @keyframes bobY {
+            from {
+                margin-top: -10px;
+            }
+
+            to {
+                margin-top: 10px;
+            }
+        }
+
+        .balloon .body {
+            width: 100%;
+            height: 100%;
+            border-radius: 999px;
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 45%),
+                linear-gradient(145deg, rgba(255, 255, 255, .25), rgba(255, 255, 255, 0)),
+                var(--grad);
+            border: 1px solid rgba(255, 255, 255, .55);
+            position: relative;
+        }
+
+        .balloon .knot {
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 16px;
+            height: 14px;
+            transform: translateX(-50%) rotate(8deg);
+            background: var(--knot);
+            clip-path: polygon(50% 0, 0 100%, 100% 100%);
+            border-radius: 2px;
+        }
+
+        .balloon .string {
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 2px);
+            width: 2px;
+            height: calc(var(--w) * 1.2);
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, .18);
+            border-radius: 99px;
+        }
+
+        .balloon .string::after {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 18%;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, .14);
+            opacity: .35;
         }
 
         /* ===== Layout ===== */
@@ -114,6 +277,7 @@
             display: grid;
             place-items: center;
             padding: clamp(16px, 3vw, 44px);
+            z-index: 5;
         }
 
         .card {
@@ -126,6 +290,8 @@
             padding: clamp(20px, 3.4vw, 44px);
             position: relative;
             overflow: hidden;
+            z-index: 10;
+            /* ensure always above effects */
         }
 
         .card::before {
@@ -237,8 +403,8 @@
 
         /* ===== Main text ===== */
         .headline {
-            margin: 16px 0 0;
-            font-size: clamp(40px, 5vw, 74px);
+            margin: 20px 0;
+            font-size: clamp(40px, 5vw, 70px);
             line-height: 1.02;
             letter-spacing: -0.02em;
             font-weight: 1000;
@@ -273,7 +439,7 @@
             font-weight: 800;
         }
 
-        /* ===== Big number bubble ===== */
+        /* ===== Big date bubble ===== */
         .dateBubble {
             margin-top: clamp(14px, 2vw, 20px);
             display: flex;
@@ -298,8 +464,8 @@
         }
 
         .big5 {
-            padding: 20px;
-            width: 250;
+            padding: 10px;
+            width: 300px;
             height: 84px;
             border-radius: 28px;
             display: grid;
@@ -307,7 +473,7 @@
             background: linear-gradient(135deg, rgba(255, 74, 160, .25), rgba(43, 183, 255, .20));
             border: 1px solid rgba(255, 255, 255, .75);
             box-shadow: 0 18px 44px rgba(0, 0, 0, .10);
-            font-size: 44px;
+            font-size: 40px;
             font-weight: 1100;
             color: rgba(27, 27, 27, .78);
             animation: pop 1.6s ease-in-out infinite alternate;
@@ -458,7 +624,9 @@
             .card::before,
             .spark,
             .big5,
-            .mascot .face {
+            .mascot .face,
+            .fall-flower,
+            .balloon {
                 animation: none !important;
             }
         }
@@ -467,6 +635,11 @@
 
 <body>
     <div class="wall" id="wall"></div>
+
+    <!-- NEW: falling flowers + balloons -->
+    <div class="fall-layer" id="fallLayer"></div>
+    <div class="balloon-layer" id="balloonLayer"></div>
+
     <canvas id="confetti"></canvas>
 
     <main class="wrap">
@@ -541,14 +714,14 @@
             for (let i = 0; i < count; i++) {
                 const f = document.createElement('div');
                 f.className = 'flower';
-                const s = Math.random() * 120 + 70;            // size
-                const x = Math.random() * 100;                 // percent
-                const y = Math.random() * 100;                 // percent
+                const s = Math.random() * 120 + 70;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
                 const r = (Math.random() * 360) + 'deg';
                 const d = (Math.random() * 6 + 5) + 's';
                 const o = (Math.random() * 0.35 + 0.18);
-
                 const c = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+
                 f.style.setProperty('--s', s + 'px');
                 f.style.setProperty('--x', x + '%');
                 f.style.setProperty('--y', y + '%');
@@ -562,7 +735,6 @@
         }
         makeFlowers();
         window.addEventListener('resize', makeFlowers);
-        document.getElementById('btnShuffle').addEventListener('click', makeFlowers);
 
         // ===== Fullscreen handling =====
         const root = document.documentElement;
@@ -635,6 +807,93 @@
         marquee.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
         marquee.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
 
+        // ===== NEW: Falling flowers =====
+        const fallLayer = document.getElementById('fallLayer');
+
+        function spawnFallingFlowers() {
+            fallLayer.innerHTML = '';
+            const count = Math.max(24, Math.floor((window.innerWidth * window.innerHeight) / 42000));
+            for (let i = 0; i < count; i++) {
+                const f = document.createElement('div');
+                f.className = 'fall-flower';
+
+                const s = (Math.random() * 26 + 18);         // 18..44
+                const x = (Math.random() * 100) + '%';
+                const r = (Math.random() * 360) + 'deg';
+                const dur = (Math.random() * 10 + 10) + 's'; // 10..20
+                const o = (Math.random() * 0.45 + 0.25);
+                const c = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+
+                f.style.setProperty('--s', s + 'px');
+                f.style.setProperty('--x', x);
+                f.style.setProperty('--r', r);
+                f.style.setProperty('--dur', dur);
+                f.style.setProperty('--o', o);
+                f.style.setProperty('--c', c);
+
+                f.style.animationDelay = (-Math.random() * 12) + 's';
+                fallLayer.appendChild(f);
+            }
+        }
+
+        // ===== NEW: Balloons flying =====
+        const balloonLayer = document.getElementById('balloonLayer');
+        const balloonGradients = [
+            { grad: 'linear-gradient(180deg, #ff9bd0, #ff4aa0)', knot: '#ff4aa0' },
+            { grad: 'linear-gradient(180deg, #98e8ff, #2bb7ff)', knot: '#2bb7ff' },
+            { grad: 'linear-gradient(180deg, #fff1a6, #ffd33d)', knot: '#ffd33d' },
+            { grad: 'linear-gradient(180deg, #b6fff3, #2ee6c6)', knot: '#2ee6c6' },
+            { grad: 'linear-gradient(180deg, #c2b4ff, #7c4dff)', knot: '#7c4dff' },
+            { grad: 'linear-gradient(180deg, #ffd1b0, #ff8a3d)', knot: '#ff8a3d' },
+        ];
+
+        function spawnBalloons() {
+            balloonLayer.innerHTML = '';
+            const n = Math.max(6, Math.floor(window.innerWidth / 220));
+            for (let i = 0; i < n; i++) {
+                const b = document.createElement('div');
+                b.className = 'balloon';
+
+                const pick = balloonGradients[Math.floor(Math.random() * balloonGradients.length)];
+                const w = Math.random() * 38 + 46;        // 46..84
+                const y = (Math.random() * 55 + 8) + '%'; // 8..63%
+                const dur = (Math.random() * 18 + 18) + 's'; // 18..36
+                const o = (Math.random() * 0.35 + 0.55);
+
+                b.style.setProperty('--w', w + 'px');
+                b.style.setProperty('--y', y);
+                b.style.setProperty('--dur', dur);
+                b.style.setProperty('--o', o);
+                b.style.setProperty('--grad', pick.grad);
+                b.style.setProperty('--knot', pick.knot);
+
+                b.style.animationDelay = (-Math.random() * 20) + 's';
+
+                b.innerHTML = `
+          <div class="body" style="--grad:${pick.grad}">
+            <div class="knot" style="background:${pick.knot}"></div>
+            <div class="string"></div>
+          </div>
+        `;
+                balloonLayer.appendChild(b);
+            }
+        }
+
+        // Hook shuffle button to also refresh falling flowers + balloons
+        document.getElementById('btnShuffle').addEventListener('click', () => {
+            makeFlowers();
+            spawnFallingFlowers();
+            spawnBalloons();
+        });
+
+        // init + resize
+        spawnFallingFlowers();
+        spawnBalloons();
+        window.addEventListener('resize', () => {
+            spawnFallingFlowers();
+            spawnBalloons();
+        });
+
         // ===== Cute confetti bubbles canvas (infinite) =====
         const canvas = document.getElementById('confetti');
         const ctx = canvas.getContext('2d');
@@ -698,7 +957,6 @@
                 ctx.fillStyle = b.c;
                 ctx.fill();
 
-                // highlight
                 ctx.beginPath();
                 ctx.arc(b.x - b.r * 0.35, b.y - b.r * 0.35, b.r * 0.35, 0, Math.PI * 2);
                 ctx.fillStyle = 'rgba(255,255,255,.22)';
