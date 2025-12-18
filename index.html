@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Selamat Liburan Akhir Tahun</title>
+    <meta name="theme-color" content="#070A12" />
+    <style>
+        :root {
+            --bg1: #070A12;
+            --bg2: #0B1633;
+            --bg3: #140A2D;
+            --fg: #F6F7FB;
+            --muted: rgba(246, 247, 251, .78);
+            --glass: rgba(255, 255, 255, .10);
+            --glass2: rgba(255, 255, 255, .14);
+            --shadow: 0 18px 60px rgba(0, 0, 0, .45);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0
+        }
+
+        body {
+            overflow: hidden;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+            color: var(--fg);
+            background:
+                radial-gradient(1200px 900px at 18% 18%, rgba(70, 140, 255, .40) 0%, rgba(70, 140, 255, 0) 62%),
+                radial-gradient(1000px 800px at 82% 24%, rgba(255, 90, 205, .35) 0%, rgba(255, 90, 205, 0) 60%),
+                linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+        }
+
+        /* ===== Aurora / blobs background (looping) ===== */
+        .aurora {
+            position: fixed;
+            inset: -30%;
+            filter: blur(34px) saturate(1.15);
+            opacity: .78;
+            pointer-events: none;
+            background:
+                radial-gradient(closest-side at 18% 30%, rgba(100, 180, 255, .58), rgba(100, 180, 255, 0) 60%),
+                radial-gradient(closest-side at 58% 40%, rgba(255, 110, 200, .46), rgba(255, 110, 200, 0) 62%),
+                radial-gradient(closest-side at 75% 72%, rgba(120, 255, 210, .30), rgba(120, 255, 210, 0) 64%);
+            animation: drift 18s ease-in-out infinite alternate;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(-2%, -1%) rotate(-2deg) scale(1.05);
+            }
+
+            50% {
+                transform: translate(2%, 2%) rotate(1deg) scale(1.12);
+            }
+
+            100% {
+                transform: translate(4%, -1%) rotate(3deg) scale(1.08);
+            }
+        }
+
+        /* ===== Floating particles ===== */
+        canvas#stars {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* ===== Main layout ===== */
+        .wrap {
+            position: relative;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            padding: clamp(18px, 3vw, 40px);
+        }
+
+        .card {
+            width: min(980px, 92vw);
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .06));
+            border: 1px solid rgba(255, 255, 255, .14);
+            box-shadow: var(--shadow);
+            padding: clamp(18px, 3.3vw, 40px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* glossy streak */
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: -20%;
+            background: linear-gradient(120deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, .08));
+            transform: translateX(-30%) rotate(8deg);
+            animation: sheen 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sheen {
+            0% {
+                transform: translateX(-40%) rotate(8deg);
+                opacity: .55;
+            }
+
+            50% {
+                transform: translateX(10%) rotate(8deg);
+                opacity: .85;
+            }
+
+            100% {
+                transform: translateX(40%) rotate(8deg);
+                opacity: .55;
+            }
+        }
+
+        /* ===== Title + rotating "infinity" ===== */
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .28);
+            border: 1px solid rgba(255, 255, 255, .12);
+            backdrop-filter: blur(8px);
+            font-size: 14px;
+            color: var(--muted);
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, rgba(255, 255, 255, .25));
+            box-shadow: 0 0 18px rgba(255, 255, 255, .28);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .7
+            }
+
+            50% {
+                transform: scale(1.35);
+                opacity: 1
+            }
+        }
+
+        .infinity {
+            width: 86px;
+            height: 44px;
+            opacity: .9;
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .45));
+            animation: spin 6.5s linear infinite;
+            flex: 0 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .headline {
+            margin: 18px 0 0;
+            font-size: clamp(34px, 4.5vw, 64px);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+
+        .headline .grad {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, .86), rgba(255, 255, 255, 1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .sub {
+            margin: 14px 0 0;
+            font-size: clamp(16px, 1.6vw, 22px);
+            color: var(--muted);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== Message slider (infinite) ===== */
+        .marquee {
+            margin-top: clamp(18px, 2.8vw, 32px);
+            background: rgba(0, 0, 0, .24);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .marquee::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(12, 14, 22, 1), rgba(12, 14, 22, 0) 18%,
+                    rgba(12, 14, 22, 0) 82%, rgba(12, 14, 22, 1));
+            pointer-events: none;
+            opacity: .8;
+        }
+
+        .track {
+            display: flex;
+            gap: 22px;
+            padding: 14px 18px;
+            width: max-content;
+            animation: scroll 18s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .06));
+            border: 1px solid rgba(255, 255, 255, .12);
+            white-space: nowrap;
+            font-size: clamp(16px, 1.6vw, 22px);
+            font-weight: 650;
+            letter-spacing: .01em;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+        }
+
+        .pill .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .12);
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .14);
+        }
+
+        .pill small {
+            font-weight: 700;
+            color: rgba(255, 255, 255, .9);
+        }
+
+        /* ===== Bottom controls ===== */
+        .controls {
+            margin-top: clamp(18px, 2.6vw, 28px);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .btn {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 16px;
+            padding: 12px 16px;
+            color: var(--fg);
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .14);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
+            font-weight: 700;
+            letter-spacing: .01em;
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            user-select: none;
+            transition: transform .12s ease, background .12s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, .16);
+        }
+
+        .btn:active {
+            transform: translateY(0px) scale(.99);
+        }
+
+        .btn.primary {
+            background: linear-gradient(90deg, rgba(100, 180, 255, .32), rgba(255, 110, 200, .24));
+        }
+
+        .hint {
+            color: rgba(255, 255, 255, .62);
+            font-size: 14px;
+            user-select: none;
+        }
+
+        /* auto-hide controls in fullscreen */
+        body.fullscreen .controls {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity .35s ease, transform .35s ease;
+        }
+
+        body.fullscreen:hover .controls {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* reduce motion accessibility */
+        @media (prefers-reduced-motion: reduce) {
+
+            .aurora,
+            .card::before,
+            .track,
+            .dot,
+            .infinity {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aurora"></div>
+    <canvas id="stars"></canvas>
+
+    <main class="wrap" id="root">
+        <section class="card" aria-label="Slide liburan akhir tahun">
+            <div class="top">
+                <div class="badge"><span class="dot"></span> Looping • Fullscreen • 1080p-ready</div>
+
+                <!-- Infinity icon (SVG) -->
+                <svg class="infinity" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <path
+                        d="M60 50C60 30 75 15 95 15C115 15 130 30 140 50C150 70 165 85 185 85C205 85 220 70 220 50C220 30 205 15 185 15C165 15 150 30 140 50C130 70 115 85 95 85C75 85 60 70 60 50Z"
+                        stroke="rgba(255,255,255,.88)" stroke-width="10" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+
+            <h1 class="headline">
+                <span class="grad">Selamat liburan akhir tahun</span>
+            </h1>
+            <p class="sub">
+                Masuk lagi <strong style="color:rgba(255,255,255,.92)">tanggal 5</strong> • Semangat tetep belajar walau
+                liburan ✨
+            </p>
+
+            <!-- Marquee infinite loop -->
+            <div class="marquee" role="presentation">
+                <div class="track" id="track">
+                    <!-- set 1 -->
+                    <div class="pill"><span class="icon">🎉</span><small>Selamat liburan akhir tahun</small></div>
+                    <div class="pill"><span class="icon">📅</span><small>Masuk lagi tanggal 5</small></div>
+                    <div class="pill"><span class="icon">📚</span><small>Semangat tetep belajar walau liburan</small>
+                    </div>
+
+                    <!-- set 2 (duplicate for perfect loop) -->
+                    <div class="pill"><span class="icon">🎉</span><small>Selamat liburan akhir tahun</small></div>
+                    <div class="pill"><span class="icon">📅</span><small>Masuk lagi tanggal 5</small></div>
+                    <div class="pill"><span class="icon">📚</span><small>Semangat tetep belajar walau liburan</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn primary" id="btnFs" title="Masuk fullscreen (F)">
+                    ⛶ Fullscreen
+                </button>
+                <button class="btn" id="btnSpeed" title="Ubah kecepatan marquee">
+                    ⚡ Speed: <span id="speedLabel">Normal</span>
+                </button>
+                <button class="btn" id="btnTheme" title="Ganti suasana background">
+                    🌈 Mood: <span id="themeLabel">Aurora</span>
+                </button>
+                <span class="hint">Tip: tekan <b>F</b> untuk fullscreen • <b>Esc</b> untuk keluar</span>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // ===== Fullscreen handling (must be user-initiated) =====
+        const root = document.documentElement;
+        const btnFs = document.getElementById('btnFs');
+
+        async function enterFullscreen() {
+            try {
+                if (!document.fullscreenElement) {
+                    await root.requestFullscreen();
+                }
+            } catch (e) { /* ignore */ }
+            updateFullscreenState();
+            requestWakeLock(); // try keep screen on
+        }
+
+        function exitFullscreen() {
+            if (document.fullscreenElement) document.exitFullscreen();
+        }
+
+        function updateFullscreenState() {
+            const fs = !!document.fullscreenElement;
+            document.body.classList.toggle('fullscreen', fs);
+            btnFs.textContent = fs ? '⤢ Exit Fullscreen' : '⛶ Fullscreen';
+        }
+
+        btnFs.addEventListener('click', () => {
+            if (document.fullscreenElement) exitFullscreen();
+            else enterFullscreen();
+        });
+
+        document.addEventListener('fullscreenchange', updateFullscreenState);
+
+        // Shortcut keys
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'f' || e.key === 'F') {
+                e.preventDefault();
+                if (document.fullscreenElement) exitFullscreen();
+                else enterFullscreen();
+            }
+        });
+
+        // ===== Wake Lock (Chrome/Android supported) =====
+        let wakeLock = null;
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator && document.fullscreenElement) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    wakeLock.addEventListener('release', () => { });
+                }
+            } catch (e) { /* not supported or denied */ }
+        }
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') requestWakeLock();
+        });
+
+        // ===== Marquee speed toggle =====
+        const track = document.getElementById('track');
+        const btnSpeed = document.getElementById('btnSpeed');
+        const speedLabel = document.getElementById('speedLabel');
+
+        const speeds = [
+            { name: 'Slow', dur: 26 },
+            { name: 'Normal', dur: 18 },
+            { name: 'Fast', dur: 12 },
+        ];
+        let speedIdx = 1;
+
+        function applySpeed() {
+            track.style.animationDuration = speeds[speedIdx].dur + 's';
+            speedLabel.textContent = speeds[speedIdx].name;
+        }
+        applySpeed();
+        btnSpeed.addEventListener('click', () => {
+            speedIdx = (speedIdx + 1) % speeds.length;
+            applySpeed();
+        });
+
+        // ===== Mood/theme toggle (background variations) =====
+        const btnTheme = document.getElementById('btnTheme');
+        const themeLabel = document.getElementById('themeLabel');
+        const moods = [
+            {
+                name: 'Aurora',
+                bodyBg: `
+          radial-gradient(1200px 900px at 18% 18%, rgba(70,140,255,.40) 0%, rgba(70,140,255,0) 62%),
+          radial-gradient(1000px 800px at 82% 24%, rgba(255,90,205,.35) 0%, rgba(255,90,205,0) 60%),
+          linear-gradient(135deg, #070A12, #0B1633, #140A2D)`
+            },
+            {
+                name: 'Midnight',
+                bodyBg: `
+          radial-gradient(900px 700px at 25% 35%, rgba(120,180,255,.18) 0%, rgba(120,180,255,0) 60%),
+          radial-gradient(1100px 800px at 80% 30%, rgba(150,120,255,.16) 0%, rgba(150,120,255,0) 60%),
+          linear-gradient(135deg, #05070f, #081024, #0a0820)`
+            },
+            {
+                name: 'Festive',
+                bodyBg: `
+          radial-gradient(1100px 800px at 20% 20%, rgba(255,210,90,.22) 0%, rgba(255,210,90,0) 60%),
+          radial-gradient(900px 700px at 80% 30%, rgba(255,90,150,.22) 0%, rgba(255,90,150,0) 60%),
+          linear-gradient(135deg, #07101a, #0b1430, #1a0830)`
+            }
+        ];
+        let moodIdx = 0;
+        btnTheme.addEventListener('click', () => {
+            moodIdx = (moodIdx + 1) % moods.length;
+            document.body.style.background = moods[moodIdx].bodyBg;
+            themeLabel.textContent = moods[moodIdx].name;
+        });
+
+        // ===== Stars / particles canvas (lightweight, infinite) =====
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+        let w, h, dpr;
+        const dots = [];
+        const DOTS = 140;
+
+        function resize() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            w = canvas.width = Math.floor(window.innerWidth * dpr);
+            h = canvas.height = Math.floor(window.innerHeight * dpr);
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function rand(min, max) { return Math.random() * (max - min) + min; }
+
+        function initDots() {
+            dots.length = 0;
+            for (let i = 0; i < DOTS; i++) {
+                dots.push({
+                    x: rand(0, window.innerWidth),
+                    y: rand(0, window.innerHeight),
+                    r: rand(0.7, 2.2),
+                    a: rand(0.10, 0.55),
+                    vx: rand(-0.15, 0.20),
+                    vy: rand(-0.10, 0.16)
+                });
+            }
+        }
+        initDots();
+
+        function step() {
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+            // subtle vignette
+            const grd = ctx.createRadialGradient(
+                window.innerWidth * 0.5, window.innerHeight * 0.45, 50,
+                window.innerWidth * 0.5, window.innerHeight * 0.5, Math.max(window.innerWidth, window.innerHeight) * 0.7
+            );
+            grd.addColorStop(0, 'rgba(0,0,0,0)');
+            grd.addColorStop(1, 'rgba(0,0,0,.35)');
+            ctx.fillStyle = grd;
+            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+            // dots
+            for (const p of dots) {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < -20) p.x = window.innerWidth + 20;
+                if (p.x > window.innerWidth + 20) p.x = -20;
+                if (p.y < -20) p.y = window.innerHeight + 20;
+                if (p.y > window.innerHeight + 20) p.y = -20;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,255,255,${p.a})`;
+                ctx.fill();
+            }
+
+            requestAnimationFrame(step);
+        }
+        step();
+
+        // Nice: pause marquee on hover (desktop)
+        const marquee = document.querySelector('.marquee');
+        marquee.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+        marquee.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+    </script>
+</body>
+
+</html>
