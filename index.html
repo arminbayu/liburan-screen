@@ -4,18 +4,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Selamat Liburan Akhir Tahun</title>
-    <meta name="theme-color" content="#070A12" />
+    <title>Liburan Akhir Tahun 🌸</title>
+    <meta name="theme-color" content="#ff7ab6" />
     <style>
         :root {
-            --bg1: #070A12;
-            --bg2: #0B1633;
-            --bg3: #140A2D;
-            --fg: #F6F7FB;
-            --muted: rgba(246, 247, 251, .78);
-            --glass: rgba(255, 255, 255, .10);
-            --glass2: rgba(255, 255, 255, .14);
-            --shadow: 0 18px 60px rgba(0, 0, 0, .45);
+            --bgA: #ffdaf0;
+            --bgB: #d9f7ff;
+            --bgC: #fff3c7;
+
+            --card: rgba(255, 255, 255, .72);
+            --card2: rgba(255, 255, 255, .55);
+            --stroke: rgba(255, 255, 255, .65);
+
+            --ink: #1b1b1b;
+            --inkSoft: rgba(27, 27, 27, .70);
+
+            --pink: #ff4aa0;
+            --purple: #7c4dff;
+            --blue: #2bb7ff;
+            --mint: #2ee6c6;
+            --yellow: #ffd33d;
+            --orange: #ff8a3d;
+
+            --shadow: 0 22px 60px rgba(20, 10, 30, .18);
         }
 
         * {
@@ -30,106 +41,124 @@
 
         body {
             overflow: hidden;
-            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
-            color: var(--fg);
+            font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+            color: var(--ink);
             background:
-                radial-gradient(1200px 900px at 18% 18%, rgba(70, 140, 255, .40) 0%, rgba(70, 140, 255, 0) 62%),
-                radial-gradient(1000px 800px at 82% 24%, rgba(255, 90, 205, .35) 0%, rgba(255, 90, 205, 0) 60%),
-                linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+                radial-gradient(1400px 900px at 15% 20%, var(--bgA) 0%, rgba(255, 218, 240, 0) 58%),
+                radial-gradient(1200px 900px at 85% 25%, var(--bgB) 0%, rgba(217, 247, 255, 0) 60%),
+                radial-gradient(1200px 900px at 50% 85%, var(--bgC) 0%, rgba(255, 243, 199, 0) 62%),
+                linear-gradient(135deg, #fff, #fff);
         }
 
-        /* ===== Aurora / blobs background (looping) ===== */
-        .aurora {
+        /* ===== Animated flower wallpaper ===== */
+        .wall {
             position: fixed;
-            inset: -30%;
-            filter: blur(34px) saturate(1.15);
-            opacity: .78;
+            inset: 0;
             pointer-events: none;
+            opacity: .95;
+            filter: saturate(1.05);
+        }
+
+        .flower {
+            position: absolute;
+            width: var(--s);
+            height: var(--s);
+            left: var(--x);
+            top: var(--y);
+            transform: translate(-50%, -50%) rotate(var(--r));
+            animation: floaty var(--d) ease-in-out infinite alternate;
+            opacity: var(--o);
+        }
+
+        @keyframes floaty {
+            from {
+                transform: translate(-50%, -50%) rotate(var(--r)) translateY(0px) scale(1);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(calc(var(--r) + 10deg)) translateY(-18px) scale(1.05);
+            }
+        }
+
+        /* simple SVG petals look via CSS */
+        .flower::before {
+            content: "";
+            position: absolute;
+            inset: 0;
             background:
-                radial-gradient(closest-side at 18% 30%, rgba(100, 180, 255, .58), rgba(100, 180, 255, 0) 60%),
-                radial-gradient(closest-side at 58% 40%, rgba(255, 110, 200, .46), rgba(255, 110, 200, 0) 62%),
-                radial-gradient(closest-side at 75% 72%, rgba(120, 255, 210, .30), rgba(120, 255, 210, 0) 64%);
-            animation: drift 18s ease-in-out infinite alternate;
-            transform: translate3d(0, 0, 0);
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .95) 0 18%, rgba(255, 255, 255, 0) 19%),
+                radial-gradient(circle at 50% 15%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 85% 50%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 50% 85%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 15% 50%, var(--c) 0 28%, rgba(0, 0, 0, 0) 29%),
+                radial-gradient(circle at 78% 22%, rgba(255, 255, 255, .55) 0 18%, rgba(0, 0, 0, 0) 19%),
+                radial-gradient(circle at 22% 78%, rgba(255, 255, 255, .35) 0 16%, rgba(0, 0, 0, 0) 17%);
+            border-radius: 50%;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, .06));
         }
 
-        @keyframes drift {
-            0% {
-                transform: translate(-2%, -1%) rotate(-2deg) scale(1.05);
-            }
-
-            50% {
-                transform: translate(2%, 2%) rotate(1deg) scale(1.12);
-            }
-
-            100% {
-                transform: translate(4%, -1%) rotate(3deg) scale(1.08);
-            }
-        }
-
-        /* ===== Floating particles ===== */
-        canvas#stars {
+        /* ===== confetti bubbles ===== */
+        canvas#confetti {
             position: fixed;
             inset: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            opacity: .75;
         }
 
-        /* ===== Main layout ===== */
+        /* ===== Layout ===== */
         .wrap {
             position: relative;
             height: 100%;
             display: grid;
             place-items: center;
-            padding: clamp(18px, 3vw, 40px);
+            padding: clamp(16px, 3vw, 44px);
         }
 
         .card {
-            width: min(980px, 92vw);
-            border-radius: 28px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .06));
-            border: 1px solid rgba(255, 255, 255, .14);
+            width: min(1100px, 92vw);
+            border-radius: 32px;
+            background: linear-gradient(180deg, var(--card), var(--card2));
+            border: 1px solid var(--stroke);
             box-shadow: var(--shadow);
-            padding: clamp(18px, 3.3vw, 40px);
+            backdrop-filter: blur(10px);
+            padding: clamp(20px, 3.4vw, 44px);
             position: relative;
             overflow: hidden;
         }
 
-        /* glossy streak */
         .card::before {
             content: "";
             position: absolute;
-            inset: -20%;
-            background: linear-gradient(120deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, .08));
-            transform: translateX(-30%) rotate(8deg);
-            animation: sheen 8s ease-in-out infinite;
+            inset: -30%;
+            background:
+                radial-gradient(closest-side at 25% 35%, rgba(255, 74, 160, .22), rgba(255, 74, 160, 0) 60%),
+                radial-gradient(closest-side at 80% 30%, rgba(43, 183, 255, .22), rgba(43, 183, 255, 0) 62%),
+                radial-gradient(closest-side at 55% 80%, rgba(46, 230, 198, .18), rgba(46, 230, 198, 0) 62%);
+            filter: blur(22px);
+            animation: glow 10s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
-        @keyframes sheen {
-            0% {
-                transform: translateX(-40%) rotate(8deg);
-                opacity: .55;
+        @keyframes glow {
+            from {
+                transform: translate(-2%, -1%) scale(1);
+                opacity: .75;
             }
 
-            50% {
-                transform: translateX(10%) rotate(8deg);
-                opacity: .85;
-            }
-
-            100% {
-                transform: translateX(40%) rotate(8deg);
-                opacity: .55;
+            to {
+                transform: translate(2%, 2%) scale(1.08);
+                opacity: .95;
             }
         }
 
-        /* ===== Title + rotating "infinity" ===== */
+        /* ===== Top bar ===== */
         .top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 14px;
             position: relative;
             z-index: 2;
         }
@@ -140,22 +169,23 @@
             gap: 10px;
             padding: 10px 14px;
             border-radius: 999px;
-            background: rgba(0, 0, 0, .28);
-            border: 1px solid rgba(255, 255, 255, .12);
-            backdrop-filter: blur(8px);
-            font-size: 14px;
-            color: var(--muted);
+            background: rgba(255, 255, 255, .58);
+            border: 1px solid rgba(255, 255, 255, .70);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+            color: rgba(27, 27, 27, .75);
+            font-weight: 800;
+            letter-spacing: .01em;
             user-select: none;
             white-space: nowrap;
         }
 
-        .dot {
-            width: 10px;
-            height: 10px;
+        .spark {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #fff, rgba(255, 255, 255, .25));
-            box-shadow: 0 0 18px rgba(255, 255, 255, .28);
-            animation: pulse 1.6s ease-in-out infinite;
+            box-shadow: 0 0 18px rgba(255, 74, 160, .35);
+            animation: pulse 1.4s ease-in-out infinite;
         }
 
         @keyframes pulse {
@@ -163,81 +193,162 @@
             0%,
             100% {
                 transform: scale(1);
-                opacity: .7
+                opacity: .8
             }
 
             50% {
-                transform: scale(1.35);
+                transform: scale(1.4);
                 opacity: 1
             }
         }
 
-        .infinity {
-            width: 86px;
-            height: 44px;
-            opacity: .9;
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .45));
-            animation: spin 6.5s linear infinite;
-            flex: 0 0 auto;
+        .mascot {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            color: rgba(27, 27, 27, .72);
+            user-select: none;
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
+        .mascot .face {
+            width: 44px;
+            height: 44px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .62);
+            border: 1px solid rgba(255, 255, 255, .70);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+            animation: bob 2.2s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-6px) rotate(1deg);
             }
         }
 
+        /* ===== Main text ===== */
         .headline {
-            margin: 18px 0 0;
-            font-size: clamp(34px, 4.5vw, 64px);
-            line-height: 1.05;
+            margin: 16px 0 0;
+            font-size: clamp(40px, 5vw, 74px);
+            line-height: 1.02;
             letter-spacing: -0.02em;
-            font-weight: 800;
+            font-weight: 1000;
             position: relative;
             z-index: 2;
         }
 
-        .headline .grad {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, .86), rgba(255, 255, 255, 1));
+        .headline .rainbow {
+            background: linear-gradient(90deg,
+                    var(--pink), var(--purple), var(--blue),
+                    var(--mint), var(--yellow), var(--orange), var(--pink));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .10));
+            background-size: 220% 100%;
+            animation: rainbow 5.5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            to {
+                background-position: 220% 0;
+            }
         }
 
         .sub {
             margin: 14px 0 0;
-            font-size: clamp(16px, 1.6vw, 22px);
-            color: var(--muted);
+            font-size: clamp(18px, 2vw, 26px);
+            color: var(--inkSoft);
             position: relative;
             z-index: 2;
+            font-weight: 800;
         }
 
-        /* ===== Message slider (infinite) ===== */
+        /* ===== Big number bubble ===== */
+        .dateBubble {
+            margin-top: clamp(14px, 2vw, 20px);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .62);
+            border: 1px solid rgba(255, 255, 255, .75);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, .08);
+            font-weight: 950;
+            font-size: clamp(16px, 1.8vw, 22px);
+        }
+
+        .big5 {
+            padding: 20px;
+            width: 250;
+            height: 84px;
+            border-radius: 28px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(255, 74, 160, .25), rgba(43, 183, 255, .20));
+            border: 1px solid rgba(255, 255, 255, .75);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, .10);
+            font-size: 44px;
+            font-weight: 1100;
+            color: rgba(27, 27, 27, .78);
+            animation: pop 1.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pop {
+            from {
+                transform: rotate(-2deg) scale(1);
+            }
+
+            to {
+                transform: rotate(2deg) scale(1.06);
+            }
+        }
+
+        /* ===== Marquee infinite loop ===== */
         .marquee {
-            margin-top: clamp(18px, 2.8vw, 32px);
-            background: rgba(0, 0, 0, .24);
-            border: 1px solid rgba(255, 255, 255, .12);
-            border-radius: 20px;
+            margin-top: clamp(18px, 2.8vw, 30px);
+            background: rgba(255, 255, 255, .55);
+            border: 1px solid rgba(255, 255, 255, .70);
+            border-radius: 24px;
             overflow: hidden;
             position: relative;
             z-index: 2;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, .08);
         }
 
         .marquee::after {
             content: "";
             position: absolute;
             inset: 0;
-            background:
-                linear-gradient(90deg, rgba(12, 14, 22, 1), rgba(12, 14, 22, 0) 18%,
-                    rgba(12, 14, 22, 0) 82%, rgba(12, 14, 22, 1));
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 18%,
+                    rgba(255, 255, 255, 0) 82%, rgba(255, 255, 255, 1));
             pointer-events: none;
-            opacity: .8;
+            opacity: .72;
         }
 
         .track {
             display: flex;
-            gap: 22px;
-            padding: 14px 18px;
+            gap: 16px;
+            padding: 14px 16px;
             width: max-content;
             animation: scroll 18s linear infinite;
         }
@@ -258,33 +369,27 @@
             gap: 12px;
             padding: 12px 16px;
             border-radius: 999px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .06));
-            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .70);
+            border: 1px solid rgba(255, 255, 255, .85);
             white-space: nowrap;
-            font-size: clamp(16px, 1.6vw, 22px);
-            font-weight: 650;
+            font-size: clamp(16px, 1.7vw, 22px);
+            font-weight: 950;
             letter-spacing: .01em;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
         }
 
         .pill .icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, .12);
+            width: 34px;
+            height: 34px;
+            border-radius: 14px;
             display: grid;
             place-items: center;
-            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(255, 255, 255, .75);
+            border: 1px solid rgba(255, 255, 255, .85);
         }
 
-        .pill small {
-            font-weight: 700;
-            color: rgba(255, 255, 255, .9);
-        }
-
-        /* ===== Bottom controls ===== */
+        /* ===== Controls ===== */
         .controls {
-            margin-top: clamp(18px, 2.6vw, 28px);
+            margin-top: clamp(18px, 2.6vw, 26px);
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
@@ -297,24 +402,24 @@
             appearance: none;
             border: none;
             cursor: pointer;
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 12px 16px;
-            color: var(--fg);
-            background: rgba(255, 255, 255, .12);
-            border: 1px solid rgba(255, 255, 255, .14);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
-            font-weight: 700;
+            color: rgba(27, 27, 27, .86);
+            background: rgba(255, 255, 255, .70);
+            border: 1px solid rgba(255, 255, 255, .85);
+            box-shadow: 0 16px 34px rgba(0, 0, 0, .08);
+            font-weight: 950;
             letter-spacing: .01em;
             display: inline-flex;
             gap: 10px;
             align-items: center;
             user-select: none;
-            transition: transform .12s ease, background .12s ease;
+            transition: transform .12s ease, filter .12s ease;
         }
 
         .btn:hover {
             transform: translateY(-1px);
-            background: rgba(255, 255, 255, .16);
+            filter: brightness(1.02);
         }
 
         .btn:active {
@@ -322,16 +427,17 @@
         }
 
         .btn.primary {
-            background: linear-gradient(90deg, rgba(100, 180, 255, .32), rgba(255, 110, 200, .24));
+            color: rgba(27, 27, 27, .88);
+            background: linear-gradient(90deg, rgba(255, 74, 160, .25), rgba(43, 183, 255, .22), rgba(46, 230, 198, .18));
         }
 
         .hint {
-            color: rgba(255, 255, 255, .62);
+            color: rgba(27, 27, 27, .58);
             font-size: 14px;
+            font-weight: 800;
             user-select: none;
         }
 
-        /* auto-hide controls in fullscreen */
         body.fullscreen .controls {
             opacity: 0;
             pointer-events: none;
@@ -345,14 +451,14 @@
             transform: translateY(0);
         }
 
-        /* reduce motion accessibility */
         @media (prefers-reduced-motion: reduce) {
 
-            .aurora,
-            .card::before,
+            .flower,
             .track,
-            .dot,
-            .infinity {
+            .card::before,
+            .spark,
+            .big5,
+            .mascot .face {
                 animation: none !important;
             }
         }
@@ -360,97 +466,128 @@
 </head>
 
 <body>
-    <div class="aurora"></div>
-    <canvas id="stars"></canvas>
+    <div class="wall" id="wall"></div>
+    <canvas id="confetti"></canvas>
 
-    <main class="wrap" id="root">
-        <section class="card" aria-label="Slide liburan akhir tahun">
+    <main class="wrap">
+        <section class="card" aria-label="Slide liburan anak SD">
             <div class="top">
-                <div class="badge"><span class="dot"></span> Looping • Fullscreen • 1080p-ready</div>
-
-                <!-- Infinity icon (SVG) -->
-                <svg class="infinity" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true">
-                    <path
-                        d="M60 50C60 30 75 15 95 15C115 15 130 30 140 50C150 70 165 85 185 85C205 85 220 70 220 50C220 30 205 15 185 15C165 15 150 30 140 50C130 70 115 85 95 85C75 85 60 70 60 50Z"
-                        stroke="rgba(255,255,255,.88)" stroke-width="10" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
+                <div class="badge"><span class="spark"></span> Mode TV • Looping • Fullscreen</div>
+                <div class="mascot">
+                    <div class="face">🌸</div>
+                    <div>Liburan Ceria!</div>
+                </div>
             </div>
 
             <h1 class="headline">
-                <span class="grad">Selamat liburan akhir tahun</span>
+                <span class="rainbow">Selamat Liburan Akhir Tahun!</span>
             </h1>
+
             <p class="sub">
-                Masuk lagi <strong style="color:rgba(255,255,255,.92)">tanggal 5</strong> • Semangat tetep belajar walau
-                liburan ✨
+                Yeay~ saatnya istirahat, main, dan kumpul bareng keluarga! 💖
             </p>
 
-            <!-- Marquee infinite loop -->
+            <div class="dateBubble">
+                <div class="chip">📅 Masuk sekolah lagi</div>
+                <div class="big5">Tanggal 5</div>
+                <div class="chip">Jangan lupa siap-siap yaa! ✅</div>
+            </div>
+
             <div class="marquee" role="presentation">
                 <div class="track" id="track">
                     <!-- set 1 -->
-                    <div class="pill"><span class="icon">🎉</span><small>Selamat liburan akhir tahun</small></div>
-                    <div class="pill"><span class="icon">📅</span><small>Masuk lagi tanggal 5</small></div>
-                    <div class="pill"><span class="icon">📚</span><small>Semangat tetep belajar walau liburan</small>
-                    </div>
+                    <div class="pill"><span class="icon">🎉</span> Selamat liburan akhir tahun!</div>
+                    <div class="pill"><span class="icon">🧠</span> Semangat belajar walau liburan!</div>
+                    <div class="pill"><span class="icon">📚</span> Baca 10 menit sehari 📖</div>
+                    <div class="pill"><span class="icon">✍️</span> Latihan menulis 1 kalimat ✨</div>
+                    <div class="pill"><span class="icon">😴</span> Tidur cukup biar sehat!</div>
+                    <div class="pill"><span class="icon">😊</span> Tetap sopan & baik ya!</div>
 
                     <!-- set 2 (duplicate for perfect loop) -->
-                    <div class="pill"><span class="icon">🎉</span><small>Selamat liburan akhir tahun</small></div>
-                    <div class="pill"><span class="icon">📅</span><small>Masuk lagi tanggal 5</small></div>
-                    <div class="pill"><span class="icon">📚</span><small>Semangat tetep belajar walau liburan</small>
-                    </div>
+                    <div class="pill"><span class="icon">🎉</span> Selamat liburan akhir tahun!</div>
+                    <div class="pill"><span class="icon">🧠</span> Semangat belajar walau liburan!</div>
+                    <div class="pill"><span class="icon">📚</span> Baca 10 menit sehari 📖</div>
+                    <div class="pill"><span class="icon">✍️</span> Latihan menulis 1 kalimat ✨</div>
+                    <div class="pill"><span class="icon">😴</span> Tidur cukup biar sehat!</div>
+                    <div class="pill"><span class="icon">😊</span> Tetap sopan & baik ya!</div>
                 </div>
             </div>
 
             <div class="controls">
-                <button class="btn primary" id="btnFs" title="Masuk fullscreen (F)">
-                    ⛶ Fullscreen
-                </button>
-                <button class="btn" id="btnSpeed" title="Ubah kecepatan marquee">
-                    ⚡ Speed: <span id="speedLabel">Normal</span>
-                </button>
-                <button class="btn" id="btnTheme" title="Ganti suasana background">
-                    🌈 Mood: <span id="themeLabel">Aurora</span>
-                </button>
+                <button class="btn primary" id="btnFs" title="Fullscreen (F)">⛶ Fullscreen</button>
+                <button class="btn" id="btnSpeed" title="Ubah kecepatan">⚡ Speed: <span
+                        id="speedLabel">Normal</span></button>
+                <button class="btn" id="btnShuffle" title="Acak bunga">🌼 Acak Bunga</button>
                 <span class="hint">Tip: tekan <b>F</b> untuk fullscreen • <b>Esc</b> untuk keluar</span>
             </div>
         </section>
     </main>
 
     <script>
-        // ===== Fullscreen handling (must be user-initiated) =====
+        // ===== Build flower wallpaper =====
+        const wall = document.getElementById('wall');
+        const flowerColors = [
+            'rgba(255, 74, 160, .55)',
+            'rgba(124, 77, 255, .45)',
+            'rgba(43, 183, 255, .48)',
+            'rgba(46, 230, 198, .42)',
+            'rgba(255, 211, 61, .50)',
+            'rgba(255, 138, 61, .42)'
+        ];
+
+        function makeFlowers() {
+            wall.innerHTML = '';
+            const count = Math.max(18, Math.floor((window.innerWidth * window.innerHeight) / 52000));
+            for (let i = 0; i < count; i++) {
+                const f = document.createElement('div');
+                f.className = 'flower';
+                const s = Math.random() * 120 + 70;            // size
+                const x = Math.random() * 100;                 // percent
+                const y = Math.random() * 100;                 // percent
+                const r = (Math.random() * 360) + 'deg';
+                const d = (Math.random() * 6 + 5) + 's';
+                const o = (Math.random() * 0.35 + 0.18);
+
+                const c = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+                f.style.setProperty('--s', s + 'px');
+                f.style.setProperty('--x', x + '%');
+                f.style.setProperty('--y', y + '%');
+                f.style.setProperty('--r', r);
+                f.style.setProperty('--d', d);
+                f.style.setProperty('--o', o);
+                f.style.setProperty('--c', c);
+
+                wall.appendChild(f);
+            }
+        }
+        makeFlowers();
+        window.addEventListener('resize', makeFlowers);
+        document.getElementById('btnShuffle').addEventListener('click', makeFlowers);
+
+        // ===== Fullscreen handling =====
         const root = document.documentElement;
         const btnFs = document.getElementById('btnFs');
 
         async function enterFullscreen() {
             try {
-                if (!document.fullscreenElement) {
-                    await root.requestFullscreen();
-                }
-            } catch (e) { /* ignore */ }
+                if (!document.fullscreenElement) await root.requestFullscreen();
+            } catch (e) { }
             updateFullscreenState();
-            requestWakeLock(); // try keep screen on
+            requestWakeLock();
         }
-
         function exitFullscreen() {
             if (document.fullscreenElement) document.exitFullscreen();
         }
-
         function updateFullscreenState() {
             const fs = !!document.fullscreenElement;
             document.body.classList.toggle('fullscreen', fs);
             btnFs.textContent = fs ? '⤢ Exit Fullscreen' : '⛶ Fullscreen';
         }
-
         btnFs.addEventListener('click', () => {
             if (document.fullscreenElement) exitFullscreen();
             else enterFullscreen();
         });
-
         document.addEventListener('fullscreenchange', updateFullscreenState);
-
-        // Shortcut keys
         window.addEventListener('keydown', (e) => {
             if (e.key === 'f' || e.key === 'F') {
                 e.preventDefault();
@@ -459,15 +596,14 @@
             }
         });
 
-        // ===== Wake Lock (Chrome/Android supported) =====
+        // ===== Wake Lock =====
         let wakeLock = null;
         async function requestWakeLock() {
             try {
                 if ('wakeLock' in navigator && document.fullscreenElement) {
                     wakeLock = await navigator.wakeLock.request('screen');
-                    wakeLock.addEventListener('release', () => { });
                 }
-            } catch (e) { /* not supported or denied */ }
+            } catch (e) { }
         }
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') requestWakeLock();
@@ -479,12 +615,11 @@
         const speedLabel = document.getElementById('speedLabel');
 
         const speeds = [
-            { name: 'Slow', dur: 26 },
+            { name: 'Pelan', dur: 26 },
             { name: 'Normal', dur: 18 },
-            { name: 'Fast', dur: 12 },
+            { name: 'Cepat', dur: 12 },
         ];
         let speedIdx = 1;
-
         function applySpeed() {
             track.style.animationDuration = speeds[speedIdx].dur + 's';
             speedLabel.textContent = speeds[speedIdx].name;
@@ -495,110 +630,84 @@
             applySpeed();
         });
 
-        // ===== Mood/theme toggle (background variations) =====
-        const btnTheme = document.getElementById('btnTheme');
-        const themeLabel = document.getElementById('themeLabel');
-        const moods = [
-            {
-                name: 'Aurora',
-                bodyBg: `
-          radial-gradient(1200px 900px at 18% 18%, rgba(70,140,255,.40) 0%, rgba(70,140,255,0) 62%),
-          radial-gradient(1000px 800px at 82% 24%, rgba(255,90,205,.35) 0%, rgba(255,90,205,0) 60%),
-          linear-gradient(135deg, #070A12, #0B1633, #140A2D)`
-            },
-            {
-                name: 'Midnight',
-                bodyBg: `
-          radial-gradient(900px 700px at 25% 35%, rgba(120,180,255,.18) 0%, rgba(120,180,255,0) 60%),
-          radial-gradient(1100px 800px at 80% 30%, rgba(150,120,255,.16) 0%, rgba(150,120,255,0) 60%),
-          linear-gradient(135deg, #05070f, #081024, #0a0820)`
-            },
-            {
-                name: 'Festive',
-                bodyBg: `
-          radial-gradient(1100px 800px at 20% 20%, rgba(255,210,90,.22) 0%, rgba(255,210,90,0) 60%),
-          radial-gradient(900px 700px at 80% 30%, rgba(255,90,150,.22) 0%, rgba(255,90,150,0) 60%),
-          linear-gradient(135deg, #07101a, #0b1430, #1a0830)`
-            }
-        ];
-        let moodIdx = 0;
-        btnTheme.addEventListener('click', () => {
-            moodIdx = (moodIdx + 1) % moods.length;
-            document.body.style.background = moods[moodIdx].bodyBg;
-            themeLabel.textContent = moods[moodIdx].name;
-        });
+        // Pause marquee on hover (desktop)
+        const marquee = document.querySelector('.marquee');
+        marquee.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+        marquee.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
 
-        // ===== Stars / particles canvas (lightweight, infinite) =====
-        const canvas = document.getElementById('stars');
+        // ===== Cute confetti bubbles canvas (infinite) =====
+        const canvas = document.getElementById('confetti');
         const ctx = canvas.getContext('2d');
-        let w, h, dpr;
-        const dots = [];
-        const DOTS = 140;
+        let dpr = 1;
 
-        function resize() {
+        const blobs = [];
+        const MAX = 70;
+
+        function resizeCanvas() {
             dpr = Math.min(window.devicePixelRatio || 1, 2);
-            w = canvas.width = Math.floor(window.innerWidth * dpr);
-            h = canvas.height = Math.floor(window.innerHeight * dpr);
+            canvas.width = Math.floor(window.innerWidth * dpr);
+            canvas.height = Math.floor(window.innerHeight * dpr);
             canvas.style.width = window.innerWidth + 'px';
             canvas.style.height = window.innerHeight + 'px';
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(dpr, dpr);
         }
-        window.addEventListener('resize', resize);
-        resize();
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
         function rand(min, max) { return Math.random() * (max - min) + min; }
+        const blobColors = [
+            'rgba(255,74,160,.22)',
+            'rgba(124,77,255,.18)',
+            'rgba(43,183,255,.20)',
+            'rgba(46,230,198,.18)',
+            'rgba(255,211,61,.18)',
+            'rgba(255,138,61,.16)',
+        ];
 
-        function initDots() {
-            dots.length = 0;
-            for (let i = 0; i < DOTS; i++) {
-                dots.push({
+        function initBlobs() {
+            blobs.length = 0;
+            for (let i = 0; i < MAX; i++) {
+                blobs.push({
                     x: rand(0, window.innerWidth),
                     y: rand(0, window.innerHeight),
-                    r: rand(0.7, 2.2),
-                    a: rand(0.10, 0.55),
-                    vx: rand(-0.15, 0.20),
-                    vy: rand(-0.10, 0.16)
+                    r: rand(6, 18),
+                    vx: rand(-0.25, 0.25),
+                    vy: rand(-0.30, 0.18),
+                    c: blobColors[Math.floor(Math.random() * blobColors.length)],
+                    a: rand(0.20, 0.65),
                 });
             }
         }
-        initDots();
+        initBlobs();
 
-        function step() {
+        function loop() {
             ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-            // subtle vignette
-            const grd = ctx.createRadialGradient(
-                window.innerWidth * 0.5, window.innerHeight * 0.45, 50,
-                window.innerWidth * 0.5, window.innerHeight * 0.5, Math.max(window.innerWidth, window.innerHeight) * 0.7
-            );
-            grd.addColorStop(0, 'rgba(0,0,0,0)');
-            grd.addColorStop(1, 'rgba(0,0,0,.35)');
-            ctx.fillStyle = grd;
-            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+            for (const b of blobs) {
+                b.x += b.vx;
+                b.y += b.vy;
 
-            // dots
-            for (const p of dots) {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < -20) p.x = window.innerWidth + 20;
-                if (p.x > window.innerWidth + 20) p.x = -20;
-                if (p.y < -20) p.y = window.innerHeight + 20;
-                if (p.y > window.innerHeight + 20) p.y = -20;
+                if (b.x < -30) b.x = window.innerWidth + 30;
+                if (b.x > window.innerWidth + 30) b.x = -30;
+                if (b.y < -30) b.y = window.innerHeight + 30;
+                if (b.y > window.innerHeight + 30) b.y = -30;
 
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255,255,255,${p.a})`;
+                ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                ctx.fillStyle = b.c;
+                ctx.fill();
+
+                // highlight
+                ctx.beginPath();
+                ctx.arc(b.x - b.r * 0.35, b.y - b.r * 0.35, b.r * 0.35, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,.22)';
                 ctx.fill();
             }
 
-            requestAnimationFrame(step);
+            requestAnimationFrame(loop);
         }
-        step();
-
-        // Nice: pause marquee on hover (desktop)
-        const marquee = document.querySelector('.marquee');
-        marquee.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
-        marquee.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+        loop();
     </script>
 </body>
 
